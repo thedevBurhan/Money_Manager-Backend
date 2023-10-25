@@ -20,7 +20,7 @@ async function generateNewTransData(req, res) {
         category: category,
         account: account,
         amount: amount,
-        userid: userid,
+        id: userid,
       },
     ]);
     return res
