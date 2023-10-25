@@ -33,9 +33,11 @@ router.post("/signup",async(req,res)=>{
 router.post("/login",async(req,res)=>{
     try {
         //is user available
-        const user=await getUser(req.body.email);
+        var user=await getUser(req.body.email);
+        // console.log(user)
         if(!user){
-            res.status(404).json({data:{message:"User Not Found",result:user,user:user,statusCode:404}})
+            
+          return  res.status(404).json({data:{message:"User Not Found",result:user,user:user,statusCode:404}})
         }
         //is password is valid
         const validPassword=await bcrypt.compare(
