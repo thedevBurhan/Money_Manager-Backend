@@ -35,7 +35,7 @@ router.post("/login",async(req,res)=>{
         //is user available
         const user=await getUser(req.body.email);
         if(!user){
-            res.status(404).json({data:"Invaild Email"})
+            res.status(404).json({data:{message:"User Not Found",result:user,statusCode:404}})
         }
         //is password is valid
         const validPassword=await bcrypt.compare(
@@ -43,11 +43,11 @@ router.post("/login",async(req,res)=>{
             user.password
         )//compare my hashed and password in req.body
         if(!validPassword){
-            return res.status(400).json({data:"Invalid Password"})
+            return res.status(400).json({data:{message:"Invalid Password",result:validPassword,statusCode:400}})
         }
         // token
         const token=await generateJwtToken(user._id);
-        res.status(200).json({data:{message:"Sucessfully Logged In",token:token,user:user,result:validPassword}})
+        res.status(200).json({data:{message:"Sucessfully Logged In",result:validPassword,statusCode:200}})
     } catch (error) {
         console.log(error)
         res.send(500).json({data:"Internal Server Error"})
