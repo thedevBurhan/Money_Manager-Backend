@@ -78,36 +78,35 @@ async function getSpecificUserTransData(req, res) {
 }
 // To get TransData For Specific User for sepecific category
 async function getSpecificUserTransDataForSpecificCategory(req, res) {
-  var alltransdata = await GetAllTransData(req);
   try {
-    if (alltransdata > 0) {
-      res.status(400).json({ data: "No Data found" });
-    } else {
-      const TransactionsData = alltransdata.filter(
-        (item) => item.userid == req.params.id && item.type == req.body.type
-      );
-    //   console.log(TransactionsData);
-    if(TransactionsData.length>0){
+    var alltransdata = await GetAllTransData(req);
+    if (alltransdata.length === 0) {
+      res.status(400).json({ message: "No Data found", statusCode: 400 });
+      return; // Return here to prevent further execution
+    }
+
+    const TransactionsData = alltransdata.filter(
+      (item) => item.userid == req.params.id && item.type == req.body.types
+    );
+
+    if (TransactionsData.length > 0) {
       res.json({
-        message: "Transaction Data send successfull",
+        message: "Transaction Data send successfully",
         statusCode: 200,
         TransactionsData: TransactionsData.reverse(),
       });
-    }else{
-        res.json({
-            message: "Transaction Data send successfull",
-            statusCode: 200,
-            TransactionsData: "No Transaction Data Found",
-          });
-    }
+    } else {
+      res.json({
+        message: "No Transaction Data Found",
+        statusCode: 202,
+      });
     }
   } catch (error) {
-    res.json({
-      message: "Internal server error ",
-      statusCode: 500,
-    });
+    console.error(error);
+    res.status(500).json({ message: "Internal server error", statusCode: 500 });
   }
 }
+
 // To Edit A Transaction Data
 async function updateTransactionsData(req,res){
     try{
