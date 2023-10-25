@@ -8,7 +8,7 @@ import {
 // To Generate TransData
 
 async function generateNewTransData(req, res) {
-  const { type, date, category, account, amount, userid } = req.body;
+  const { type, date, category, account, amount, id } = req.body;
 
   // Checking if all fields are filled in the form
   //  if(!body) return res.status(400).json({ error: "TransData is required" });
@@ -20,7 +20,7 @@ async function generateNewTransData(req, res) {
         category: category,
         account: account,
         amount: amount,
-        id: userid,
+        id:id,
       },
     ]);
     return res
