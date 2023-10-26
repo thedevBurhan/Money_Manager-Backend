@@ -97,8 +97,9 @@ async function getSpecificUserTransDataForSpecificCategory(req, res) {
       });
     } else {
       res.json({
-        message: "No Transaction Data Found",
+        message: "No Transaction Data Found for Selected Account",
         statusCode: 202,
+        TransactionsData: [],
       });
     }
   } catch (error) {
