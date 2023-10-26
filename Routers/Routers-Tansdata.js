@@ -16,7 +16,7 @@ router.get("/allTransData", AllTranData);
 // To get transData For specific User
 router.get("/specificUser/:id", getSpecificUserTransData);
 // To Get TransData For Specific User for Specific Category
-router.get(
+router.post(
   "/categoryForSpecificUser/:id",
   getSpecificUserTransDataForSpecificCategory
 );
