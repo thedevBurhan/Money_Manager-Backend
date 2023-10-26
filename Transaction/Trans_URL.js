@@ -76,7 +76,6 @@ async function getSpecificUserTransData(req, res) {
     });
   }
 }
-// To get TransData For Specific User for sepecific category
 async function getSpecificUserTransDataForSpecificCategory(req, res) {
   try {
     var alltransdata = await GetAllTransData(req);
@@ -85,13 +84,15 @@ async function getSpecificUserTransDataForSpecificCategory(req, res) {
       return; // Return here to prevent further execution
     }
 
+    const selectedAccountLowercase = req.body.types.toLowerCase(); // Convert selectedAccount to lowercase
+
     const TransactionsData = alltransdata.filter(
-      (item) => item.userid == req.params.id && item.type == req.body.types
+      (item) => item.userid == req.params.id && item.type.toLowerCase() == selectedAccountLowercase
     );
 
     if (TransactionsData.length > 0) {
       res.json({
-        message: "Transaction Data send successfully",
+        message: "Transaction Data sent successfully",
         statusCode: 200,
         TransactionsData: TransactionsData.reverse(),
       });
@@ -99,7 +100,7 @@ async function getSpecificUserTransDataForSpecificCategory(req, res) {
       res.json({
         message: "No Transaction Data Found for Selected Account",
         statusCode: 202,
-        TransactionsData: [],
+        TransactionsData:  TransactionsData.reverse(),
       });
     }
   } catch (error) {
@@ -107,6 +108,7 @@ async function getSpecificUserTransDataForSpecificCategory(req, res) {
     res.status(500).json({ message: "Internal server error", statusCode: 500 });
   }
 }
+
 
 // To Edit A Transaction Data
 async function updateTransactionsData(req,res){
