@@ -84,7 +84,7 @@ async function getSpecificUserTransDataForSpecificCategory(req, res) {
       return; // Return here to prevent further execution
     }
 
-    const selectedAccountLowercase = req.query.types.toLowerCase();// Convert selectedAccount to lowercase
+    const selectedAccountLowercase = req.body.types.toLowerCase();// Convert selectedAccount to lowercase
 
     const TransactionsData = alltransdata.filter(
       (item) => item.userid == req.params.id && item.type.toLowerCase() == selectedAccountLowercase
